@@ -30,18 +30,20 @@ de la liga española: https://www.football-data.co.uk/spainm.php"
 sp1 <- read.csv("SP1.csv")
 View(sp1)
 
-
 "3. Del dataframe que resulta de importar los datos a `R`, extrae las columnas que contienen
 los números de goles anotados por los equipos que jugaron en casa (FTHG) y los goles anotados
 por los equipos que jugaron como visitante (FTAG); guárdalos en vectores separados"
 goles.local <- sp1$FTHG
 goles.visita <- sp1$FTAG
 
+goles.partidos <- sp1[,c("FTHG","FTAG")]
+View(goles.partidos)
 
 "4. Consulta cómo funciona la función `table` en `R`. Para ello, puedes ingresar los comandos
 `?table` para leer la documentación."
 ?table
-
+(matriz.goles <- table(goles.partidos$FTHG, goles.partidos$FTAG))
+View(matriz.goles)
 
 #5. Responde a las siguientes preguntas:
 #  a) ¿Cuántos goles tuvo el partido con mayor empate?
@@ -69,6 +71,9 @@ for(i in 1:length(goles.local)){
 }
 paste("Cantidad de partidos empatados a 0: ", partidos.sin.goles)
 
+#RESULTADO OBTENIDO CON FUNCION TABLE COMO ORIGEN
+paste("Cantidad de partidos empatados a 0: ", matriz.goles["0","0"])
+
 #  c) ¿En cuántos partidos el equipo local (HG) tuvo la mayor goleada sin dejar que el equipo visitante (AG) metiera un solo gol?
 partidos.local.goleada.cero <- 0
 
@@ -78,3 +83,7 @@ for(i in 1:length(goles.local)){
   }
 }
 paste("Cantidad de partidos el local goleo a 0: ", partidos.local.goleada.cero)
+
+#RESULTADO OBTENIDO CON FUNCION TABLE COMO ORIGEN
+local.goleador <- sum(matriz.goles[4:length(matriz.goles[,"0"]),"0"])
+paste("Cantidad de partidos el local goleo a 0: ", local.goleador)
