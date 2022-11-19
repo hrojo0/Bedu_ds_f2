@@ -20,10 +20,11 @@ tipo y escala correspondiente."
 df <- read.csv("https://raw.githubusercontent.com/beduExpert/Programacion-R-Santander-2022/main/Sesion-03/Data/boxp.csv")
 
 df <- na.omit(df)
-summary(df)
+
 df$Categoria <- factor(df$Categoria)
 df$Grupo <- factor(df$Grupo, labels = c("No", "Si"))
 
+summary(df)
 
 #1) Calcula e interpreta las medidas de tendencia central de la variable `Mediciones`
 mean(df$Mediciones); median(df$Mediciones); Mode(df$Mediciones)[1]
@@ -58,7 +59,7 @@ por lo que la mayoría de los datos se concentrarán al lado izquierdo del histo
       theme_light())
 
 "Las 3 categorías están generando el sesgo debido a que cada una los datos se concentran en los datos de menor valor"
-
+ggsave("Histograma - Mediciones por Categoría.jpg", plot = hist.mediciones)
 
 
 "5) Con ggplot, realiza un boxplot separando la distribución de `Mediciones` por `Categoría` 
@@ -70,8 +71,9 @@ podrían estar generando el sesgo?"
       labs(title = "Mediciones por Categoría",x = "Mediciones", y = "Categoría") + 
       coord_flip() + 
       theme_light())
+ggsave("Boxplot - Mediciones por Categoria.jpg", plot = boxplot.mediciones)
 
-boxplot.mediciones+scale_fill_manual(values=c("#F58F29", "#97DB4F"))
+#Para poner color con en los plots.... boxplot.mediciones+scale_fill_manual(values=c("#F58F29", "#97DB4F"))
 "Existen diferencias entre las categorías en cuestión de los Grupos ya que el Grupo 'Si' se mantiene en un rango más estable de mediciones,
 mientras que el Grupo 'No' se acrecenta en cada grupo lo que genera que haya una diferencia notoria entre los grupos de la Categoría 3
 siendo el grupo 'Si' el que cuenta con menores mediciones lo que provoca que se genere el sesgo de los datos"
